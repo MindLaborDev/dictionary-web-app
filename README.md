@@ -1,3 +1,10 @@
+# SolidJS & TailwindCSS Dictionary Web App
+
+This is still in **WIP**.
+
+<br>
+<br>
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
