@@ -15,18 +15,33 @@
     rel="stylesheet">
   <script>
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    window.changeTheme = function (theme) {
-      if (theme) localStorage.theme = theme;
-      else localStorage.removeItem("theme");
-
-      if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    function setPreferredTheme() {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDark) {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
       }
-    };
+    }
 
-    window.changeTheme();
+    function setTheme(theme) {
+      switch (theme) {
+        case "dark":
+          document.documentElement.classList.add("dark");
+          break;
+        case "light":
+          document.documentElement.classList.remove("dark");
+          break;
+        default:
+          setPreferredTheme();
+      }
+    }
+
+    if ("theme" in localStorage) {
+      setTheme(localStorage.theme);
+    } else {
+      setPreferredTheme();
+    }
   </script>
 </head>
 

@@ -1,24 +1,29 @@
-import {
-  type Component,
-  createSignal,
-  onMount,
-  Show,
-  createEffect,
-} from "solid-js";
+import { type Component, createSignal, onMount, Show, createEffect } from "solid-js";
 import BookIcon from "./../icons/Book";
 import MoonIcon from "./../icons/Moon";
+import DropDownIcon from "./../icons/Dropdown";
 
 const Header: Component = () => {
+  const startedWithDarkMode = document.documentElement.classList.contains("dark");
   const [fontStyle, setFontStyle] = createSignal("Sans Serif");
-  const [isShownFontStyle, showFontStyle] = createSignal(false);
+  const [isShownFontStyle, showFontStyleDropdown] = createSignal(false);
+  const [isDarkMode, setDarkMode] = createSignal(startedWithDarkMode);
+
+  function toggleTheme() {
+    setDarkMode(!isDarkMode());
+
+    if (isDarkMode()) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }
 
   createEffect(() => {
-    showFontStyle(false);
-    document.documentElement.classList.remove(
-      "font-sans",
-      "font-serif",
-      "font-mono"
-    );
+    showFontStyleDropdown(false);
+    document.documentElement.classList.remove("font-sans", "font-serif", "font-mono");
     document.documentElement.classList.add(
       {
         "Sans Serif": "font-sans",
@@ -35,27 +40,13 @@ const Header: Component = () => {
       </div>
       <div class="relative flex self-center font-bold">
         <button
-          onClick={() => showFontStyle(!isShownFontStyle())}
+          onClick={() => showFontStyleDropdown(!isShownFontStyle())}
           id="select-font-style"
           type="button"
           class="inline-flex w-32 items-center justify-end rounded-lg py-2.5 pl-4 text-center text-sm font-bold text-white focus:outline-none"
         >
           {fontStyle()}
-          <svg
-            class="ml-4 h-4 w-4 text-purple-light"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            ></path>
-          </svg>
+          <DropDownIcon />
         </button>
 
         <Show when={isShownFontStyle()}>
@@ -67,22 +58,13 @@ const Header: Component = () => {
               class="text-gray-700 dark:text-gray-200 cursor-pointer rounded-2xl py-3 text-sm shadow-purple-light"
               aria-labelledby="select-font-style"
             >
-              <li
-                onClick={() => setFontStyle("Sans Serif")}
-                class="px-6 py-2 font-sans hover:text-purple-light"
-              >
+              <li onClick={() => setFontStyle("Sans Serif")} class="px-6 py-2 font-sans hover:text-purple-light">
                 Sans Serif
               </li>
-              <li
-                onClick={() => setFontStyle("Serif")}
-                class="px-6 py-2 font-serif hover:text-purple-light"
-              >
+              <li onClick={() => setFontStyle("Serif")} class="px-6 py-2 font-serif hover:text-purple-light">
                 Serif
               </li>
-              <li
-                onClick={() => setFontStyle("Mono")}
-                class="px-6 py-2 font-mono hover:text-purple-light"
-              >
+              <li onClick={() => setFontStyle("Mono")} class="px-6 py-2 font-mono hover:text-purple-light">
                 Mono
               </li>
             </ul>
@@ -92,8 +74,11 @@ const Header: Component = () => {
       <div class="ml-6 border-r-2 border-gray-lighter dark:border-white"></div>
       <div class="ml-6 flex self-center">
         <label class="relative inline-flex cursor-pointer items-center self-center">
-          <input type="checkbox" value="" class="peer sr-only" />
-          <div class="peer my-auto h-6 w-10 rounded-full bg-gray-darkest after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-gray-half-darkest peer-checked:peer-focus:ring-purple-lighter dark:border-gray-light dark:bg-gray-darkest"></div>
+          <input type="checkbox" checked={startedWithDarkMode} class="peer sr-only" />
+          <div
+            onClick={toggleTheme}
+            class="peer my-auto h-6 w-10 rounded-full bg-gray-darkest after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-gray-half-darkest peer-checked:peer-focus:ring-purple-lighter dark:border-gray-light dark:bg-gray-darkest"
+          ></div>
         </label>
       </div>
       <div class="ml-4 flex self-center text-purple-light">
