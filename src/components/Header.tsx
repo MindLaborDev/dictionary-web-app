@@ -43,17 +43,14 @@ const Header: Component = () => {
           onClick={() => showFontStyleDropdown(!isShownFontStyle())}
           id="select-font-style"
           type="button"
-          class="inline-flex w-32 items-center justify-end rounded-lg py-2.5 pl-4 text-center text-sm font-bold text-white focus:outline-none"
+          class="inline-flex w-32 items-center justify-end rounded-lg py-2.5 pl-4 text-center text-sm font-bold text-gray-darker focus:outline-none dark:text-white"
         >
           {fontStyle()}
           <DropDownIcon />
         </button>
 
         <Show when={isShownFontStyle()}>
-          <div
-            id="select-font-style-dropdown"
-            class="absolute right-0 top-12 z-10 w-44 divide-y rounded-2xl bg-white text-lg text-gray-darker shadow-purple-light drop-shadow-purple-light dark:bg-gray-darkest dark:text-white"
-          >
+          <div class="absolute right-0 top-12 z-10 w-44 divide-y rounded-2xl bg-white text-lg text-gray-darker shadow-purple-light drop-shadow-purple-light dark:bg-gray-darkest dark:text-white">
             <ul
               class="text-gray-700 dark:text-gray-200 cursor-pointer rounded-2xl py-3 text-sm shadow-purple-light"
               aria-labelledby="select-font-style"
@@ -77,7 +74,7 @@ const Header: Component = () => {
           <input type="checkbox" checked={startedWithDarkMode} class="peer sr-only" />
           <div
             onClick={toggleTheme}
-            class="peer my-auto h-6 w-10 rounded-full bg-gray-darkest after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-gray-half-darkest peer-checked:peer-focus:ring-purple-lighter dark:border-gray-light dark:bg-gray-darkest"
+            class="peer my-auto h-6 w-10 rounded-full bg-gray-light after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-gray-lighter peer-checked:peer-focus:ring-purple-lighter dark:border-gray-light dark:bg-gray-darkest"
           ></div>
         </label>
       </div>

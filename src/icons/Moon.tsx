@@ -3,6 +3,7 @@ import type { Component } from "solid-js";
 const MoonIcon: Component = () => {
   return (
     <svg
+      class="text-gray-light dark:text-purple-light"
       width="22"
       height="22"
       viewBox="0 0 22 22"
