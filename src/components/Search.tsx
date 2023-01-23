@@ -81,7 +81,7 @@ const Search: Component = () => {
             id="default-search"
             value={search()}
             onInput={(e) => setSearch(e.currentTarget.value)}
-            class="block w-full rounded-2xl border border-transparent bg-gray-lightest p-4 pl-6 text-sm font-bold text-gray-darker placeholder-gray-light invalid:!border-red focus:border-purple-light focus:outline-none dark:bg-gray-darkest dark:text-white dark:caret-purple-light dark:focus:border-purple-light"
+            class="block w-full rounded-2xl border border-transparent bg-gray-lightest p-5 pl-6 text-sm font-bold text-gray-darker placeholder-gray-light invalid:!border-red focus:border-purple-light focus:outline-none dark:bg-gray-darkest dark:text-white dark:caret-purple-light dark:focus:border-purple-light"
             placeholder="Search for any word..."
             autocomplete="off"
             required={searchInvalid()}

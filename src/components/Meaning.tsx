@@ -12,7 +12,7 @@ const Meaning: Component<WordType> = (props) => {
   });
 
   return (
-    <section class="mt-20">
+    <section class="mt-16">
       <div class="flex">
         <div class="flex-1">
           <h2 class="text-gray-900 text-6xl font-bold dark:text-white">{props.word}</h2>
