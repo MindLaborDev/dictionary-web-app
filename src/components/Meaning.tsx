@@ -31,7 +31,7 @@ const Meaning: Component<WordType> = (props) => {
               <h3 class="relative text-2xl font-bold italic text-gray-darker dark:text-white">
                 {meaning.partOfSpeech}
               </h3>
-              <hr class="ml-5 w-full flex-1 self-center text-gray-dark" />
+              <hr class="ml-5 w-full flex-1 self-center text-gray-lighter" />
             </div>
             <p class="mt-10 text-xl text-gray-light">Meaning</p>
             <ul class="mt-4 list-disc text-lg text-purple">
@@ -71,7 +71,7 @@ const Meaning: Component<WordType> = (props) => {
         )}
       </For>
       <Show when={props.sourceUrls.length > 0}>
-        <hr class="mt-12 w-full text-gray-dark" />
+        <hr class="mt-12 w-full text-gray-lighter" />
         <p class="mt-4 text-sm text-gray-light">
           Source
           <a
