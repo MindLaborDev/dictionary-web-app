@@ -117,20 +117,20 @@ const Search: Component = () => {
           <Match when={status() === "not found"}>
             <div class="mt-24 text-center">
               <div class="mb-8 text-8xl">😕</div>
-              <div class="mb-4 text-2xl font-bold">No Definitions Found</div>
-              <div class="text-gray-light">
+              <h1 class="mb-4 text-2xl font-bold">No Definitions Found</h1>
+              <p class="text-gray-light">
                 Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again
                 at later time or head to the web instead.
-              </div>
+              </p>
             </div>
           </Match>
           <Match when={status() === "idle"}>
             <div class="mt-24 text-center">
               <div class="mb-8 text-8xl">💂‍♂️</div>
-              <div class="mb-4 text-2xl font-bold">Search for a word</div>
-              <div class="text-gray-light">
+              <h1 class="mb-4 text-2xl font-bold">Search for a word</h1>
+              <p class="text-gray-light">
                 Enter a word in the search box above to get its definition, synonyms and more.
-              </div>
+              </p>
             </div>
           </Match>
         </Switch>
