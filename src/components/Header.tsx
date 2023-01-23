@@ -37,7 +37,7 @@ const Header: Component = () => {
 
   return (
     <header class="flex">
-      <div class="flex-1 text-gray-light">
+      <div class="flex-1 cursor-pointer text-gray-light" onClick={() => (location.href = "#")}>
         <BookIcon />
       </div>
       <div class="relative flex self-center font-bold">
