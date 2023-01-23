@@ -84,9 +84,9 @@ const Header: Component = () => {
       </div>
       <div class="ml-6 border-r-2 border-gray-lighter dark:border-white"></div>
       <div class="ml-6 flex self-center">
-        <label for="darkmode-toggle" class="relative inline-flex cursor-pointer items-center self-center">
+        <label class="relative inline-flex cursor-pointer items-center self-center">
           <span class="sr-only">Darkmode Toggle</span>
-          <input name="darkmode-toggle" type="checkbox" checked={startedWithDarkMode} class="peer sr-only" />
+          <input type="checkbox" checked={startedWithDarkMode} class="peer sr-only" />
           <div
             onClick={toggleTheme}
             class="peer my-auto h-6 w-10 rounded-full bg-gray-light after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-light dark:bg-gray-darkest"
