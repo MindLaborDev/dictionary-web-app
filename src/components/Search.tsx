@@ -59,13 +59,14 @@ const Search: Component = () => {
         word.phonetic = word.phonetics[0]?.text ?? word.phonetic ?? "";
       }
 
+      submitted = false;
       setSearchResults(data);
       setStatus("loaded");
       return;
     }
 
-    setStatus(response.status === 404 ? "not found" : "error");
     submitted = false;
+    setStatus(response.status === 404 ? "not found" : "error");
   }
 
   return (
@@ -115,8 +116,8 @@ const Search: Component = () => {
           </Match>
           <Match when={status() === "not found"}>
             <div class="mt-24 text-center">
-              <div class="mb-8 text-6xl">😕</div>
-              <div class="mb-4 font-bold">No Definitions Found</div>
+              <div class="mb-8 text-8xl">😕</div>
+              <div class="mb-4 text-2xl font-bold">No Definitions Found</div>
               <div class="text-gray-light">
                 Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again
                 at later time or head to the web instead.
@@ -125,8 +126,8 @@ const Search: Component = () => {
           </Match>
           <Match when={status() === "idle"}>
             <div class="mt-24 text-center">
-              <div class="mb-8 text-6xl">💂‍♂️</div>
-              <div class="mb-4 font-bold">Search for a word</div>
+              <div class="mb-8 text-8xl">💂‍♂️</div>
+              <div class="mb-4 text-2xl font-bold">Search for a word</div>
               <div class="text-gray-light">
                 Enter a word in the search box above to get its definition, synonyms and more.
               </div>

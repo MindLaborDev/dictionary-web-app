@@ -34,7 +34,7 @@ module.exports = {
         sm: "480px",
         md: "768px",
         lg: "976px",
-        xl: "1440px",
+        xl: "1200px",
       },
     },
     extend: {
@@ -42,6 +42,9 @@ module.exports = {
         "purple-light": "0px 6px 20px #a445ed",
         "gray": "0px 6px 20px #00000019",
       }
+    },
+    screens: {
+      xs: "430px",
     },
   },
   darkMode: "class",

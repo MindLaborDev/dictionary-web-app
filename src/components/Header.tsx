@@ -39,7 +39,7 @@ const Header: Component = () => {
 
   return (
     <header class="flex">
-      <div class="flex-1 cursor-pointer text-gray-light" onClick={() => (location.href = "#")}>
+      <div class="invisible w-0 flex-1 cursor-pointer text-gray-light xs:visible" onClick={() => (location.href = "#")}>
         <BookIcon />
       </div>
       <div class="relative flex self-center font-bold">
@@ -47,7 +47,7 @@ const Header: Component = () => {
           onClick={() => showFontStyleDropdown(!isShownFontStyle())}
           id="select-font-style"
           type="button"
-          class="inline-flex w-32 items-center justify-end rounded-lg py-2.5 pl-4 text-center text-sm font-bold text-gray-darker focus:outline-none dark:text-white"
+          class="inline-flex w-28 items-center justify-end rounded-lg py-2.5 text-center text-sm font-bold text-gray-darker focus:outline-none dark:text-white"
         >
           {fontStyle()}
           <DropDownIcon />
