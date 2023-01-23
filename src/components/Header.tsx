@@ -7,7 +7,8 @@ const dontLetTypescriptStripThisAway = clickOutside;
 
 const Header: Component = () => {
   const startedWithDarkMode = document.documentElement.classList.contains("dark");
-  const [fontStyle, setFontStyle] = createSignal("Sans Serif");
+  const startedWithFontStyle = localStorage.getItem("fontStyle") ?? "Sans Serif";
+  const [fontStyle, setFontStyle] = createSignal(startedWithFontStyle);
   const [isShownFontStyle, showFontStyleDropdown] = createSignal(false);
   const [isDarkMode, setDarkMode] = createSignal(startedWithDarkMode);
 
@@ -33,6 +34,7 @@ const Header: Component = () => {
         Mono: "font-mono",
       }[fontStyle()] ?? "font-sans"
     );
+    localStorage.setItem("fontStyle", fontStyle());
   });
 
   return (
