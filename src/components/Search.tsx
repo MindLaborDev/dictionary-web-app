@@ -1,35 +1,45 @@
-import { Component, createSignal, For } from "solid-js";
+import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
 import Meaning from "./Meaning";
+import LoaderIcon from "../icons/Loader";
+import SearchIcon from "../icons/SearchIcon";
 
 const Search: Component = (props) => {
-  const hashSearch = location.hash.replace("#", "");
+  const [searchResults, setSearchResults] = createSignal(null);
+  const [status, setStatus] = createSignal("loading");
+  const [search, setSearch] = createSignal("");
+
+  const hashSearch = decodeURI(location.hash).replace("#", "");
   if (hashSearch) {
+    setSearch(hashSearch);
     searchForWord(hashSearch);
   }
 
-  const [search, setSearch] = createSignal(hashSearch);
-  const [searchResults, setSearchResults] = createSignal(null);
+  window.addEventListener("hashchange", () => {
+    const hashSearch = decodeURI(location.hash).replace("#", "");
+    if (hashSearch) {
+      setSearch(hashSearch);
+      searchForWord(hashSearch);
+    }
+  });
 
   function handleSearch(event: Event) {
     event.preventDefault();
     location.href = `#${search()}`;
-    searchForWord(search());
   }
 
-  function searchForWord(word: string) {
-    const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
-    fetch(url).then((respose) => {
-      if (respose.ok) {
-        respose.json().then((data) => {
-          setSearchResults(data);
-          console.log(data);
-        });
-      } else if (respose.status === 404) {
-        console.log("not found error");
-      } else {
-        console.log("something went wrong");
-      }
-    });
+  async function searchForWord(word: string) {
+    setStatus("loading");
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      setSearchResults(data);
+      setStatus("loaded");
+    } else if (response.status === 404) {
+      setStatus("not found");
+    } else {
+      setStatus("error");
+    }
   }
 
   return (
@@ -48,34 +58,43 @@ const Search: Component = (props) => {
             placeholder="Search..."
             autocomplete="off"
           />
-          <svg
-            aria-hidden="true"
-            class="pointer-events-none absolute inset-y-0 right-0 my-auto mr-6 flex h-5 w-5 text-purple-light"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-          </svg>
+          <SearchIcon />
         </div>
       </form>
-      <For each={searchResults()}>
-        {(result) => (
-          <Meaning
-            word={result.word}
-            meanings={result.meanings}
-            phonetic={result.phonetic}
-            phonetics={result.phonetics}
-            sourceUrls={result.sourceUrls}
-          />
-        )}
-      </For>
+
+      <div class="mt-14">
+        <Switch fallback={"Something went wrong 😕!"}>
+          <Match when={status() === "loading"}>
+            <div role="status">
+              <LoaderIcon />
+              <span class="sr-only">Loading...</span>
+            </div>
+          </Match>
+          <Match when={status() === "loaded"}>
+            <For each={searchResults()}>
+              {(result) => (
+                <Meaning
+                  word={result.word}
+                  meanings={result.meanings}
+                  phonetic={result.phonetic}
+                  phonetics={result.phonetics}
+                  sourceUrls={result.sourceUrls}
+                />
+              )}
+            </For>
+          </Match>
+          <Match when={status() === "not found"}>
+            <div class="mt-24 text-center">
+              <div class="mb-8 text-6xl">😕</div>
+              <div class="mb-4 font-bold">No Definitions Found</div>
+              <div class="text-gray-light">
+                Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again
+                at later time or head to the web instead.
+              </div>
+            </div>
+          </Match>
+        </Switch>
+      </div>
     </section>
   );
 };
