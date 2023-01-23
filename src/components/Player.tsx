@@ -23,7 +23,7 @@ const Player: Component<{
   }
 
   return (
-    <button onClick={() => playPauseSound()} class="group transition-all">
+    <button onClick={() => playPauseSound()} aria-label="Play sound" title="Play sound" class="group transition-all">
       <Show when={!isPlaying()}>
         <PlayIcon />
       </Show>

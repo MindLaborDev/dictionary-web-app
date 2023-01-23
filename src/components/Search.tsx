@@ -70,7 +70,7 @@ const Search: Component = () => {
   }
 
   return (
-    <section class="mt-14 w-full">
+    <main class="mt-14 w-full">
       <form onSubmit={handleSearch}>
         <label for="default-search" class="text-gray-900 sr-only mb-2 text-sm font-medium dark:text-white">
           Search
@@ -135,7 +135,7 @@ const Search: Component = () => {
           </Match>
         </Switch>
       </div>
-    </section>
+    </main>
   );
 };
 
