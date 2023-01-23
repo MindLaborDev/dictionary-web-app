@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "index.html"
   ],
   theme: {
     colors: {
@@ -39,6 +40,7 @@ module.exports = {
     extend: {
       dropShadow: {
         "purple-light": "0px 6px 20px #a445ed",
+        "gray": "0px 6px 20px #00000019",
       }
     },
   },

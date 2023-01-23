@@ -1,12 +1,15 @@
-import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
+import { Component, createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import Meaning from "./Meaning";
 import LoaderIcon from "../icons/Loader";
 import SearchIcon from "../icons/SearchIcon";
+import type { WordType } from "./Meaning";
 
-const Search: Component = (props) => {
-  const [searchResults, setSearchResults] = createSignal(null);
-  const [status, setStatus] = createSignal("loading");
+const Search: Component = () => {
+  const [searchResults, setSearchResults] = createSignal<WordType[] | null>(null);
+  const [status, setStatus] = createSignal("idle");
   const [search, setSearch] = createSignal("");
+  const [searchInvalid, setSearchInvalid] = createSignal(false);
+  let submitted = false;
 
   const hashSearch = decodeURI(location.hash).replace("#", "");
   if (hashSearch) {
@@ -24,7 +27,15 @@ const Search: Component = (props) => {
 
   function handleSearch(event: Event) {
     event.preventDefault();
-    location.href = `#${search()}`;
+    submitted = true;
+
+    const searchValue = search();
+    if (searchValue) {
+      location.hash = encodeURI(searchValue);
+      searchForWord(searchValue);
+    } else {
+      setSearchInvalid(true);
+    }
   }
 
   async function searchForWord(word: string) {
@@ -32,15 +43,26 @@ const Search: Component = (props) => {
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+      for (const word of data) {
+        word.phonetics = word.phonetics.filter((phonetic: any) => phonetic.audio);
+        word.phonetic = word.phonetics[0]?.text ?? word.phonetic ?? "";
+      }
+
       setSearchResults(data);
+      console.log(data);
       setStatus("loaded");
     } else if (response.status === 404) {
       setStatus("not found");
     } else {
       setStatus("error");
     }
+
+    submitted = false;
   }
+
+  createEffect(() => {
+    setSearchInvalid(!search() && submitted);
+  });
 
   return (
     <section class="mt-14 w-full">
@@ -54,18 +76,22 @@ const Search: Component = (props) => {
             id="default-search"
             value={search()}
             onInput={(e) => setSearch(e.currentTarget.value)}
-            class="block w-full rounded-2xl border border-transparent bg-gray-lightest p-4 pl-6 text-sm font-bold text-gray-darker placeholder-gray-light focus:border-purple-light focus:outline-none dark:bg-gray-darkest dark:text-white dark:caret-purple-light dark:focus:border-purple-light"
+            class="block w-full rounded-2xl border border-transparent bg-gray-lightest p-4 pl-6 text-sm font-bold text-gray-darker placeholder-gray-light invalid:!border-red focus:border-purple-light focus:outline-none dark:bg-gray-darkest dark:text-white dark:caret-purple-light dark:focus:border-purple-light"
             placeholder="Search..."
             autocomplete="off"
+            required={searchInvalid()}
           />
           <SearchIcon />
         </div>
+        <Show when={searchInvalid()}>
+          <p class="mt-2 text-base text-red">Whoops, can't be empty…</p>
+        </Show>
       </form>
 
-      <div class="mt-14">
+      <div>
         <Switch fallback={"Something went wrong 😕!"}>
           <Match when={status() === "loading"}>
-            <div role="status">
+            <div role="status" class="mt-14">
               <LoaderIcon />
               <span class="sr-only">Loading...</span>
             </div>
@@ -90,6 +116,15 @@ const Search: Component = (props) => {
               <div class="text-gray-light">
                 Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again
                 at later time or head to the web instead.
+              </div>
+            </div>
+          </Match>
+          <Match when={status() === "idle"}>
+            <div class="mt-24 text-center">
+              <div class="mb-8 text-6xl">💂‍♂️</div>
+              <div class="mb-4 font-bold">Search for a word</div>
+              <div class="text-gray-light">
+                Enter a word in the search box above to get its definition, synonyms and more.
               </div>
             </div>
           </Match>

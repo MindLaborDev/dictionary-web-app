@@ -1,7 +1,9 @@
-import { type Component, createSignal, onMount, Show, createEffect } from "solid-js";
+import { type Component, createSignal, Show, createEffect } from "solid-js";
 import BookIcon from "./../icons/Book";
 import MoonIcon from "./../icons/Moon";
 import DropDownIcon from "./../icons/Dropdown";
+import clickOutside from "./../utils/click-outside";
+const dontLetTypescriptStripThisAway = clickOutside;
 
 const Header: Component = () => {
   const startedWithDarkMode = document.documentElement.classList.contains("dark");
@@ -50,18 +52,28 @@ const Header: Component = () => {
         </button>
 
         <Show when={isShownFontStyle()}>
-          <div class="absolute right-0 top-12 z-10 w-44 divide-y rounded-2xl bg-white text-lg text-gray-darker shadow-purple-light drop-shadow-purple-light dark:bg-gray-darkest dark:text-white">
+          <div class="absolute right-0 top-12 z-10 w-44 divide-y rounded-2xl bg-white text-lg text-gray-darker shadow-gray drop-shadow-gray dark:bg-gray-darkest dark:text-white dark:shadow-purple-light dark:drop-shadow-purple-light">
             <ul
-              class="text-gray-700 dark:text-gray-200 cursor-pointer rounded-2xl py-3 text-sm shadow-purple-light"
+              class="text-gray-700 dark:text-gray-200 cursor-pointer rounded-2xl py-3 text-sm"
               aria-labelledby="select-font-style"
+              use:clickOutside={() => showFontStyleDropdown(false)}
             >
-              <li onClick={() => setFontStyle("Sans Serif")} class="px-6 py-2 font-sans hover:text-purple-light">
+              <li
+                onClick={() => setFontStyle("Sans Serif") && showFontStyleDropdown(false)}
+                class="px-6 py-2 font-sans hover:text-purple-light"
+              >
                 Sans Serif
               </li>
-              <li onClick={() => setFontStyle("Serif")} class="px-6 py-2 font-serif hover:text-purple-light">
+              <li
+                onClick={() => setFontStyle("Serif") && showFontStyleDropdown(false)}
+                class="px-6 py-2 font-serif hover:text-purple-light"
+              >
                 Serif
               </li>
-              <li onClick={() => setFontStyle("Mono")} class="px-6 py-2 font-mono hover:text-purple-light">
+              <li
+                onClick={() => setFontStyle("Mono") && showFontStyleDropdown(false)}
+                class="px-6 py-2 font-mono hover:text-purple-light"
+              >
                 Mono
               </li>
             </ul>
@@ -74,7 +86,7 @@ const Header: Component = () => {
           <input type="checkbox" checked={startedWithDarkMode} class="peer sr-only" />
           <div
             onClick={toggleTheme}
-            class="peer my-auto h-6 w-10 rounded-full bg-gray-light after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-gray-lighter peer-checked:peer-focus:ring-purple-lighter dark:border-gray-light dark:bg-gray-darkest"
+            class="peer my-auto h-6 w-10 rounded-full bg-gray-light after:absolute after:top-1 after:left-[4px] after:h-4 after:w-4 after:rounded-full after:border after:border-white after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-light peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-light dark:bg-gray-darkest"
           ></div>
         </label>
       </div>
