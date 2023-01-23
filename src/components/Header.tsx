@@ -47,7 +47,7 @@ const Header: Component = () => {
           onClick={() => showFontStyleDropdown(!isShownFontStyle())}
           id="select-font-style"
           type="button"
-          class="inline-flex w-28 items-center justify-end rounded-lg py-2.5 text-center text-sm font-bold text-gray-darker focus:outline-none dark:text-white"
+          class="inline-flex w-32 items-center justify-end rounded-lg py-2.5 text-center text-sm font-bold text-gray-darker focus:outline-none dark:text-white"
         >
           {fontStyle()}
           <DropDownIcon />
