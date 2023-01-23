@@ -12,18 +12,6 @@ const Header: Component = () => {
   const [isShownFontStyle, showFontStyleDropdown] = createSignal(false);
   const [isDarkMode, setDarkMode] = createSignal(startedWithDarkMode);
 
-  function toggleTheme() {
-    setDarkMode(!isDarkMode());
-
-    if (isDarkMode()) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }
-
   createEffect(() => {
     showFontStyleDropdown(false);
     document.documentElement.classList.remove("font-sans", "font-serif", "font-mono");
@@ -36,6 +24,18 @@ const Header: Component = () => {
     );
     localStorage.setItem("fontStyle", fontStyle());
   });
+
+  function toggleTheme() {
+    setDarkMode(!isDarkMode());
+
+    if (isDarkMode()) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }
 
   return (
     <header class="flex">

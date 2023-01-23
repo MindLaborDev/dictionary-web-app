@@ -1,40 +1,27 @@
-# SolidJS & TailwindCSS Dictionary Web App
+<br>&nbsp;<br>
 
-This is still in **WIP**.
+<div align="center">
+    <img src="https://github.com/MindLaborDev/solidjs-dictionary-web-app/blob/master/src/assets/demo.jpg?raw=true" width="256">
+    <h3 align="center">
+        <p>A dictionary web app built with SolidJS.</p>
+    </h3>
+</div>
+<br>&nbsp;<br>
 
-<br>
-<br>
-
-## Usage
-
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
-
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Getting Started
 
 ```bash
-$ npm install # or pnpm install or yarn install
+$ npm install
+$ npm run dev
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+<br>&nbsp;<br>
 
-## Available Scripts
+## About SolidJS
 
-In the project directory, you can run:
+Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs).
 
-### `npm dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+<br>&nbsp;<br>
 
 ## Deployment
 

@@ -11,6 +11,10 @@ const Search: Component = () => {
   const [searchInvalid, setSearchInvalid] = createSignal(false);
   let submitted = false;
 
+  createEffect(() => {
+    setSearchInvalid(!search() && submitted);
+  });
+
   const hashSearch = decodeURI(location.hash).replace("#", "");
   if (hashSearch) {
     setSearch(hashSearch);
@@ -44,29 +48,25 @@ const Search: Component = () => {
 
   async function searchForWord(word: string) {
     setStatus("loading");
+
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
     if (response.ok) {
       const data = await response.json();
+
+      // Choose a phonetic with audio
       for (const word of data) {
         word.phonetics = word.phonetics.filter((phonetic: any) => phonetic.audio);
         word.phonetic = word.phonetics[0]?.text ?? word.phonetic ?? "";
       }
 
       setSearchResults(data);
-      console.log(data);
       setStatus("loaded");
-    } else if (response.status === 404) {
-      setStatus("not found");
-    } else {
-      setStatus("error");
+      return;
     }
 
+    setStatus(response.status === 404 ? "not found" : "error");
     submitted = false;
   }
-
-  createEffect(() => {
-    setSearchInvalid(!search() && submitted);
-  });
 
   return (
     <section class="mt-14 w-full">

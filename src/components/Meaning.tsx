@@ -1,5 +1,6 @@
 import { Component, createEffect, createSignal, For, Show } from "solid-js";
 import ExternalLinkIcon from "../icons/ExternalLink";
+import { WordType } from "../types";
 import Player from "./Player";
 
 const Meaning: Component<WordType> = (props) => {
@@ -7,11 +8,7 @@ const Meaning: Component<WordType> = (props) => {
 
   createEffect(() => {
     const urls = props.phonetics.map((phonetic) => phonetic.audio).filter(Boolean);
-    if (urls.length > 0) {
-      setAudioURL(urls[0]);
-    } else {
-      setAudioURL("");
-    }
+    setAudioURL(urls.length > 0 ? urls[0] : "");
   });
 
   return (
