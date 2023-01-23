@@ -2,26 +2,6 @@ import { Component, createEffect, createSignal, For, Show } from "solid-js";
 import ExternalLinkIcon from "../icons/ExternalLink";
 import Player from "./Player";
 
-export interface MeaningType {
-  partOfSpeech: string;
-  definitions: {
-    definition: string;
-  }[];
-  antonyms: string[];
-  synonyms: string[];
-}
-
-export interface WordType {
-  word: string;
-  meanings: MeaningType[];
-  phonetic: string;
-  phonetics: {
-    text: string;
-    audio: string;
-  }[];
-  sourceUrls: string[];
-}
-
 const Meaning: Component<WordType> = (props) => {
   const [audioURL, setAudioURL] = createSignal("");
 

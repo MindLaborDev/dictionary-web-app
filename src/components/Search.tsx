@@ -2,7 +2,7 @@ import { Component, createEffect, createSignal, For, Match, Show, Switch } from 
 import Meaning from "./Meaning";
 import LoaderIcon from "../icons/Loader";
 import SearchIcon from "../icons/SearchIcon";
-import type { WordType } from "./Meaning";
+import type { WordType } from "../types";
 
 const Search: Component = () => {
   const [searchResults, setSearchResults] = createSignal<WordType[] | null>(null);
